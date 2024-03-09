@@ -13,13 +13,13 @@ const userRouter = new Hono<{
   }>()  
 
 
-userRouter.post('/api/v1/user/signup', async (c) => {
+userRouter.post('/signup', async (c) => {
 	const prisma = new PrismaClient({
-		datasourceUrl: c.env?.DATABASE_URL	,
+		datasourceUrl: c.env.DATABASE_URL	,
 	}).$extends(withAccelerate());
 
 	const body = await c.req.json();
-  // console.log(body);
+    console.log(body);
 	try {
 		const user = await prisma.user.create({
 			data: {
@@ -38,7 +38,7 @@ userRouter.post('/api/v1/user/signup', async (c) => {
 
 
 
-userRouter.post('/api/v1/user/signin',async (c) => {
+userRouter.post('/signin',async (c) => {
   const prisma=new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
