@@ -4,6 +4,9 @@ import { withAccelerate } from '@prisma/extension-accelerate';
 import { env } from 'hono/adapter';
 import { parseSigned } from 'hono/utils/cookie';
 import { sign } from 'hono/jwt';
+import { signinInput, signupInput } from '@aefgh4805/common-app';
+
+
 
 const userRouter = new Hono<{
     Bindings:{
@@ -19,7 +22,12 @@ userRouter.post('/signup', async (c) => {
 	}).$extends(withAccelerate());
 
 	const body = await c.req.json();
-    console.log(body);
+    const {success}=signupInput.safeParse(body);
+    if(!success){
+        c.status(400);
+        return c.json({message: "wrong type of input"});
+    }
+    // console.log(body);
 	try {
 		const user = await prisma.user.create({
 			data: {
@@ -44,6 +52,11 @@ userRouter.post('/signin',async (c) => {
   }).$extends(withAccelerate());
 
   const body=await c.req.json();
+  const {success}=signinInput.safeParse(body);
+  if(!success){
+    c.status(400);
+    return c.json({message: "wrong type of input sent"});
+  }
   const user=await prisma.user.findUnique({
     where:{
       email:body.email,
