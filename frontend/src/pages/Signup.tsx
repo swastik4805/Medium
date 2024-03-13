@@ -2,7 +2,7 @@
 export function Signup(){
     return(
         <div>
-            signup
+            hi
         </div>
     )
 }
