@@ -19,7 +19,6 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
             // console.log(response);
             const jwt = response.data.jwt;
             // console.log(jwt);
-            // const jwtString=JSON.stringify(jwt);
             localStorage.setItem("token", jwt);
             navigate("/blogs");
         } catch(e) {
